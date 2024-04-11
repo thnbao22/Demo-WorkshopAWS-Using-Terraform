@@ -41,11 +41,12 @@ resource "aws_subnet" "two_tier_public_subnet" {
 }
 
 ## Create Private Subnet 1
+### map_public_ip_on_launch is false means that the subnet is Private 
 resource "aws_subnet" "two_tier_private_subnet" {
-  vpc_id = aws_vpc.two_tier.id
-  availability_zone = "ap-southeast-1a"
-  cidr_block = "10.10.3.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                    = aws_vpc.two_tier.id
+  availability_zone         = "ap-southeast-1a"
+  cidr_block                = "10.10.3.0/24"
+  map_public_ip_on_launch   = false
   tags = {
     "Name" = "Private Subnet 1"
   }
@@ -53,11 +54,12 @@ resource "aws_subnet" "two_tier_private_subnet" {
 
 ## Create Private Subnet 2
 resource "aws_subnet" "two_tier_private_subnet" {
-  vpc_id = aws_vpc.two_tier.id
-  availability_zone = "ap-southeast-1b"
-  cidr_block = "10.10.4.0/24"
-  map_public_ip_on_launch = false
+  vpc_id                    = aws_vpc.two_tier.id
+  availability_zone         = "ap-southeast-1b"
+  cidr_block                = "10.10.4.0/24"
+  map_public_ip_on_launch   = false
   tags = {
     "Name" = "Private Subnet 2"
   }
 }
+
