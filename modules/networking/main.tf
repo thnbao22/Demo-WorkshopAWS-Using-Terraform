@@ -141,3 +141,46 @@ resource "aws_route_table_association" "two_tier_rt_private_associate" {
   # Optional The subnet ID to create an association.
   subnet_id       = aws_subnet.two_tier_private_subnet_2.id
 }
+
+# This data source would help you retrieve your Local IP 
+# When you click on https://ipv4.icanhazip.com, a black screen will display your local IP.
+# Link I found on Stackoverflow, you can click on it below.
+# Link: https://stackoverflow.com/questions/46763287/i-want-to-identify-the-public-ip-of-the-terraform-execution-environment-and-add 
+data "http" "local_ip" {
+  url = "https://ipv4.icanhazip.com"
+}
+
+# Create Security Group   
+## Security Group for Public Subnet
+resource "aws_security_group" "two_tier_public_sg" {
+  name        = "Public Subnet SG"
+  description = "Allow SSH and Ping for servers in the public subnet"
+  vpc_id      = aws_vpc.two_tier.id
+  ingress {
+    # define inbound rules allow SSH from your local machines
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["${chomp(data.http.local_ip.response_body)}/32"]
+    # use chomp() method to remove any trailing space or new line which comes with body.
+  }
+  ingress {
+    # You can read this blog to configure All-ICMP IPv4 rule.
+    # link: https://blog.jwr.io/terraform/icmp/ping/security/groups/2018/02/02/terraform-icmp-rules.html
+    # Allow ping from any IP address.
+    from_port = 8 #this strange syntax to allow ping
+    to_port = 0
+    protocol = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  lifecycle {
+    create_before_destroy = true
+  }
+}
