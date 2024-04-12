@@ -17,7 +17,7 @@ resource "aws_subnet" "two_tier_public_subnet_1" {
   # (Required) The VPC ID.
   vpc_id                    = aws_vpc.two_tier.id
   # (Optional) AZ for the subnet.
-  availability_zone         = "ap-southeast-1a"
+  availability_zone         = var.availability_zones[0]
   # The IPv4 CIDR block for the subnet.
   cidr_block                = "10.10.1.0/24"
   map_public_ip_on_launch   = true
@@ -31,7 +31,7 @@ resource "aws_subnet" "two_tier_public_subnet_2" {
   # (Required) The VPC ID.
   vpc_id                    = aws_vpc.two_tier.id
   # (Optional) AZ for the subnet.
-  availability_zone         = "ap-southeast-1b"
+  availability_zone         = var.availability_zones[1]
   # The IPv4 CIDR block for the subnet.
   cidr_block                = "10.10.2.0/24"
   map_public_ip_on_launch   = true
@@ -44,7 +44,7 @@ resource "aws_subnet" "two_tier_public_subnet_2" {
 ### map_public_ip_on_launch is false means that the subnet is Private 
 resource "aws_subnet" "two_tier_private_subnet_1" {
   vpc_id                    = aws_vpc.two_tier.id
-  availability_zone         = "ap-southeast-1a"
+  availability_zone         = var.availability_zones[0]
   cidr_block                = "10.10.3.0/24"
   map_public_ip_on_launch   = false
   tags = {
@@ -55,7 +55,7 @@ resource "aws_subnet" "two_tier_private_subnet_1" {
 ## Create Private Subnet 2
 resource "aws_subnet" "two_tier_private_subnet_2" {
   vpc_id                    = aws_vpc.two_tier.id
-  availability_zone         = "ap-southeast-1b"
+  availability_zone         = var.availability_zones[1]
   cidr_block                = "10.10.4.0/24"
   map_public_ip_on_launch   = false
   tags = {
@@ -72,7 +72,6 @@ resource "aws_internet_gateway" "two_tier_igw" {
 }
 
 # Create a NAT Gateway
-
 ## Before we can create a NAT Gateway, we need to allocate an Elastic IP address.
 resource "aws_eip" "two_tier_nat" {
   domain = "vpc"
@@ -84,4 +83,24 @@ resource "aws_nat_gateway" "two_tier_nat" {
   tags = {
     "Name" = "NAT Gateway"
   }
+}
+
+# Create a route table for public subnet
+resource "aws_route_table" "two_tier_rt_public" {
+  vpc_id = aws_vpc.two_tier.id
+  tags = {
+    "Name" = "Route Table Public"
+  }
+}
+
+resource "aws_route" "two_tier_rt_public" {
+  route_table_id            = aws_route_table.two_tier_rt_public.id
+  destination_cidr_block    = "0.0.0.0/0"
+  gateway_id                = aws_internet_gateway.two_tier_igw.id
+}
+# Create associatation between a route table and a public subnet 
+resource "aws_route_table_association" "two_tier_rt_public" {
+  # Required The ID of the routing table to associate with.
+  route_table_id = aws_route_table.two_tier_rt_public.id
+  subnet_id = aws
 }
