@@ -186,13 +186,13 @@ resource "aws_security_group" "two_tier_public_sg" {
 }
 ## Security Group for a server in a Private Subnet
 resource "aws_security_group" "two_tier_private_sg" {
-  name = "Private Subnet SG"
+  name        = "Private Subnet SG"
   description = "Allow SSH and Ping for servers in the private subnet"
-  vpc_id = aws_vpc.two_tier.id
+  vpc_id      = aws_vpc.two_tier.id
   ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
     # Here we choose the Public Subnet SG so that we can ssh into EC2 instance in Private Subnet via EC2 instance in Public Subnet
     # So we can call the EC2 instance in Public Subnet is Bastion Host
     security_groups = [ aws_security_group.two_tier_public_sg.id ]
@@ -212,5 +212,16 @@ resource "aws_security_group" "two_tier_private_sg" {
   
   lifecycle {
     create_before_destroy = true
+  }
+}
+# In this workshop, we choose Service Name: com.amazonaws.ap-southeast-1.s3 and Type: Gateway
+resource "aws_vpc_endpoint" "gateway_endpoint_s3" {
+  vpc_id            = aws_vpc.two_tier.id
+  service_name      = "com.amazonaws.ap-southeast-1.s3"
+  vpc_endpoint_type = "Gateway"
+  # One or more route table IDs. Applicable for endpoints of type Gateway
+  route_table_ids   = [ aws_route_table.two_tier_rt_private.id ]
+  tags = {
+    "key" = "workshop-endpoint"
   }
 }
