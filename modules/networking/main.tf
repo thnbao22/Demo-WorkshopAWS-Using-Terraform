@@ -151,7 +151,7 @@ data "http" "local_ip" {
 }
 
 # Create Security Group   
-## Security Group for Public Subnet
+## Security Group for a server in a Public Subnet
 resource "aws_security_group" "two_tier_public_sg" {
   name        = "Public Subnet SG"
   description = "Allow SSH and Ping for servers in the public subnet"
@@ -168,15 +168,45 @@ resource "aws_security_group" "two_tier_public_sg" {
     # You can read this blog to configure All-ICMP IPv4 rule.
     # link: https://blog.jwr.io/terraform/icmp/ping/security/groups/2018/02/02/terraform-icmp-rules.html
     # Allow ping from any IP address.
-    from_port = 8 #this strange syntax to allow ping
-    to_port = 0
-    protocol = "icmp"
+    from_port   = 8 #this strange syntax to allow ping
+    to_port     = 0
+    protocol    = "icmp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+## Security Group for a server in a Private Subnet
+resource "aws_security_group" "two_tier_private_sg" {
+  name = "Private Subnet SG"
+  description = "Allow SSH and Ping for servers in the private subnet"
+  vpc_id = aws_vpc.two_tier.id
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    # Here we choose the Public Subnet SG so that we can ssh into EC2 instance in Private Subnet via EC2 instance in Public Subnet
+    # So we can call the EC2 instance in Public Subnet is Bastion Host
+    security_groups = [ aws_security_group.two_tier_public_sg.id ]
+  }
+  ingress {
+    from_port   = 8
+    to_port     = 0
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
   
