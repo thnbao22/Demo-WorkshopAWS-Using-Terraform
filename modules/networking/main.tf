@@ -92,23 +92,52 @@ resource "aws_route_table" "two_tier_rt_public" {
     "Name" = "Route Table Public"
   }
 }
-
+# 0.0.0.0/0 represents internet
 resource "aws_route" "two_tier_rt_public" {
   route_table_id            = aws_route_table.two_tier_rt_public.id
   destination_cidr_block    = "0.0.0.0/0"
+  # Resources within the public subnet can access the internet through the Internet Gateway.
   gateway_id                = aws_internet_gateway.two_tier_igw.id
 }
 # Associate route table with public subnet 1
-resource "aws_route_table_association" "two_tier_rt_public" {
+resource "aws_route_table_association" "two_tier_rt_public_associate" {
   # Required: The ID of the routing table to associate with.
   route_table_id  = aws_route_table.two_tier_rt_public.id
   # Optional: The subnet ID to create an association.
   subnet_id       = aws_subnet.two_tier_public_subnet_1.id
 }
 # Associate route table with public subnet 2
-resource "aws_route_table_association" "two_tier_rt_public" {
+resource "aws_route_table_association" "two_tier_rt_public_associate" {
   # Required The ID of the routing table to associate with.
   route_table_id  = aws_route_table.two_tier_rt_public.id
   # Optional The subnet ID to create an association.
   subnet_id       = aws_subnet.two_tier_public_subnet_2.id
+}
+# Create a route table for private subnet
+resource "aws_route_table" "two_tier_rt_private" {
+  vpc_id = aws_vpc.two_tier.id
+  tags = {
+    "Name" = "Route Table Private"
+  }
+}
+
+resource "aws_route" "two_tier_rt_private" {
+  route_table_id            = aws_route_table.two_tier_rt_private.id
+  destination_cidr_block    = "0.0.0.0/0"
+  # Resources within the private subnet can access the internet through the NAT Gateway.
+  gateway_id                = aws_nat_gateway.two_tier_nat.id
+}
+# Associate route table with private subnet 1
+resource "aws_route_table_association" "two_tier_rt_private_associate" {
+  # Required: The ID of the routing table to associate with.
+  route_table_id  = aws_route_table.two_tier_rt_private.id
+  # Optional: The subnet ID to create an association.
+  subnet_id       = aws_subnet.two_tier_private_subnet_1.id
+}
+# Associate route table with privatet subnet 2
+resource "aws_route_table_association" "two_tier_rt_private_associate" {
+  # Required The ID of the routing table to associate with.
+  route_table_id  = aws_route_table.two_tier_rt_public.id
+  # Optional The subnet ID to create an association.
+  subnet_id       = aws_subnet.two_tier_private_subnet_2.id
 }
