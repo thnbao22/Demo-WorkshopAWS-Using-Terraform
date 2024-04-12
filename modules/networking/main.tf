@@ -98,9 +98,17 @@ resource "aws_route" "two_tier_rt_public" {
   destination_cidr_block    = "0.0.0.0/0"
   gateway_id                = aws_internet_gateway.two_tier_igw.id
 }
-# Create associatation between a route table and a public subnet 
+# Associate route table with public subnet 1
+resource "aws_route_table_association" "two_tier_rt_public" {
+  # Required: The ID of the routing table to associate with.
+  route_table_id  = aws_route_table.two_tier_rt_public.id
+  # Optional: The subnet ID to create an association.
+  subnet_id       = aws_subnet.two_tier_public_subnet_1.id
+}
+# Associate route table with public subnet 2
 resource "aws_route_table_association" "two_tier_rt_public" {
   # Required The ID of the routing table to associate with.
-  route_table_id = aws_route_table.two_tier_rt_public.id
-  subnet_id = aws
+  route_table_id  = aws_route_table.two_tier_rt_public.id
+  # Optional The subnet ID to create an association.
+  subnet_id       = aws_subnet.two_tier_public_subnet_2.id
 }
