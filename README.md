@@ -5,3 +5,6 @@ I will build infrastructure based on this workshop which I have made to submit t
 
 - Architecture:
 ![ConnectPrivate](images/Project.png)
+
+- So I have completely done coding infrastructure for the architecture in the workshop.
+- I will soon complete the demo of this project.
