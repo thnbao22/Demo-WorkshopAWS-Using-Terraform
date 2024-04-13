@@ -17,5 +17,15 @@ resource "aws_instance" "Bastion_Host" {
   tags = {
     "Name" = "EC2 Public"
   }
-
+}
+# Create EC2 server in Private Subnet
+resource "aws_instance" "private_server" {
+  ami             = var.ami
+  instance_type   = var.instance_type
+  key_name        = "demo-workshop"
+  subnet_id       = var.private_server_id
+  security_groups = [ var.private_server_sg ]
+  tags = {
+    "Name" = "EC2 Private"
+  }
 }
