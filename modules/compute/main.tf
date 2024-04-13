@@ -25,7 +25,33 @@ resource "aws_instance" "private_server" {
   key_name        = "demo-workshop"
   subnet_id       = var.private_server_id
   security_groups = [ var.private_server_sg ]
+  iam_instance_profile = aws_iam_instance_profile.modify_role.name
   tags = {
     "Name" = "EC2 Private"
   }
+}
+# Create IAM Role for EC2 instance to have full access to S3
+resource "aws_iam_role" "full_access_s3" {
+  name = "EC2fullaccessS3"
+  # Terraform's "jsonencode" function converts a
+  # Terraform expression result to valid JSON syntax.
+  # We use the policy name: AmazonS3FullAccess to grant permission for EC2 instance to have full access to S3
+  assume_role_policy = jsondecode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:*",
+                "s3-object-lambda:*"
+            ],
+            "Resource": "*"
+        }
+    ]
+  })
+}
+# Provides an IAM instance profile.
+resource "aws_iam_instance_profile" "modify_role" {
+  # Optional: Name of the role to add to the profile
+  role = aws_iam_role.full_access_s3.name
 }
