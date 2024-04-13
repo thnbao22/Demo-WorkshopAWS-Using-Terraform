@@ -25,6 +25,8 @@ resource "aws_instance" "private_server" {
   key_name        = "demo-workshop"
   subnet_id       = var.private_server_id
   security_groups = [ var.private_server_sg ]
+  # Optional: IAM Instance Profile to launch the instance with. 
+  # Specified as the name of the Instance Profile.
   iam_instance_profile = aws_iam_instance_profile.modify_role.name
   tags = {
     "Name" = "EC2 Private"
