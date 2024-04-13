@@ -32,7 +32,7 @@ resource "aws_instance" "private_server" {
 }
 # Create IAM Role for EC2 instance to have full access to S3
 resource "aws_iam_role" "full_access_s3" {
-  name = "EC2fullaccessS3"
+  name = "EC2FullAccessS3"
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
   # We use the policy name: AmazonS3FullAccess to grant permission for EC2 instance to have full access to S3
