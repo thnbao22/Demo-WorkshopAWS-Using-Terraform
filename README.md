@@ -3,6 +3,8 @@
 I will build infrastructure based on this workshop which I have made to submit to mission 1 of my First Cloud Journey Program.
 - Link to the workshop: [Workshop](https://thnbao22.github.io/)
 
+- Some AWS services I use in this workshop include VPC, EC2, S3, and Gateway Endpoint that supports private connection to S3 Bucket.
+
 - Architecture:
 ![ConnectPrivate](images/Project.png)
 
