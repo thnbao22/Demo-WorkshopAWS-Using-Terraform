@@ -134,7 +134,7 @@ resource "aws_route_table_association" "two_tier_rt_private_associate_1" {
   # Optional: The subnet ID to create an association.
   subnet_id       = aws_subnet.two_tier_private_subnet_1.id
 }
-# Associate route table with privatet subnet 2
+# Associate route table with private subnet 2
 resource "aws_route_table_association" "two_tier_rt_private_associate_2" {
   # Required The ID of the routing table to associate with.
   route_table_id  = aws_route_table.two_tier_rt_public.id
