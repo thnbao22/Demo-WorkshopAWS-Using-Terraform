@@ -16,3 +16,8 @@ I will build infrastructure based on this workshop which I have made to submit t
 1. Before deploying infrastructure, you need to access to your AWS account and create an access/secret key 
 ![ConnectPrivate](images/1.png)
 ![ConnectPrivate](images/2.png)
+
+2. Clone this repository
+```
+git clone https://github.com/thnbao22/Demo-WorkshopAWS-Using-Terraform.git
+```
