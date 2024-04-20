@@ -14,7 +14,9 @@ I will build infrastructure based on this workshop which I have made to submit t
 # Demo
 
 1. Before deploying infrastructure, you need to access to your AWS account and create an access/secret key 
+
 ![ConnectPrivate](images/1.png)
+
 ![ConnectPrivate](images/2.png)
 
 2. Clone this repository
@@ -23,10 +25,12 @@ git clone https://github.com/thnbao22/Demo-WorkshopAWS-Using-Terraform.git
 ```
 
 3. After cloning this repository, please open the project in Visual Studio Code and navigate to the **terraform** folder using the **cd** command on the terminal of Visual Studio Code
+
 ![ConnectPrivate](images/3.png)
 
 4. After successfully navigating to the **terraform** folder, you can run the following command
 ```
 terraform init 
 ```
+
 ![ConnectPrivate](images/4.png)
