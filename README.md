@@ -34,3 +34,7 @@ terraform init
 ```
 
 ![ConnectPrivate](images/4.png)
+
+5. After you run the command, you can see there are some folders appear in the **terraform** folder
+
+![ConnectPrivate](images/5.png)
