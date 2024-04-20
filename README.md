@@ -22,5 +22,8 @@ I will build infrastructure based on this workshop which I have made to submit t
 git clone https://github.com/thnbao22/Demo-WorkshopAWS-Using-Terraform.git
 ```
 
-1. After cloning this repository, please open the project in Visual Studio Code and navigate to the **terraform** folder using the **cd** command
+3. After cloning this repository, please open the project in Visual Studio Code and navigate to the **terraform** folder using the **cd** command on the terminal of Visual Studio Code
 ![ConnectPrivate](images/3.png)
+
+4. After successfully navigating to the **terraform** folder, you can run the following command
+```terraform init ```
