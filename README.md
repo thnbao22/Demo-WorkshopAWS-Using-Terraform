@@ -29,3 +29,4 @@ git clone https://github.com/thnbao22/Demo-WorkshopAWS-Using-Terraform.git
 ```
 terraform init 
 ```
+![ConnectPrivate](images/4.png)
