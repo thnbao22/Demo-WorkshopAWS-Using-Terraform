@@ -26,4 +26,6 @@ git clone https://github.com/thnbao22/Demo-WorkshopAWS-Using-Terraform.git
 ![ConnectPrivate](images/3.png)
 
 4. After successfully navigating to the **terraform** folder, you can run the following command
-```terraform init ```
+```
+terraform init 
+```
