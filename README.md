@@ -38,3 +38,5 @@ terraform init
 5. After you run the command successfully, you can see there are some folders appear in the **terraform** folder
 
 ![ConnectPrivate](images/5.png)
+
+6. You can access the AWS Management Console, search for EC2 and create a key pair.
