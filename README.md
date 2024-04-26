@@ -46,3 +46,14 @@ terraform init
 7. You also need to create an access/secret key and include it in the file **main.tf** in the **terraform** folder
 
 ![ConnectPrivate](images/7.png)
+
+8. Navigate to the **terraform** folder, using the command below to preview the changes that Terraform plans to make to your infrastructure.
+```
+terraform plan
+```
+
+![ConnectPrivate](images/8.png)
+
+9. You can see some resources are being created.
+
+![ConnectPrivate](images/9.png)
