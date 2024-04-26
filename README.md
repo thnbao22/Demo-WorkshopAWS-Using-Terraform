@@ -66,7 +66,4 @@ terraform apply -auto-approve
 
 ![ConnectPrivate](images/10.png)
 
-{{% notice warning %}} 
-Hi
-{{% /notice %}}
 
