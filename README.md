@@ -40,3 +40,9 @@ terraform init
 ![ConnectPrivate](images/5.png)
 
 6. You can access the AWS Management Console, search for EC2 and create a key pair.
+
+![ConnectPrivate](images/6.png)
+
+7. You also need to create an access/secret key and include it in the file **main.tf** in the **terraform** folder
+
+![ConnectPrivate](images/7.png)
