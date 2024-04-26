@@ -57,3 +57,16 @@ terraform plan
 9. You can see some resources are being created.
 
 ![ConnectPrivate](images/9.png)
+
+10. Then, you can use this command to executes the actions proposed in a Terraform plan.
+
+```
+terraform apply -auto-approve
+```
+
+![ConnectPrivate](images/10.png)
+
+{{% notice warning %}}
+Warning: If you use **-auto-approve**, we recommend making sure that no one can change your infrastructure outside of your Terraform workflow. This minimizes the risk of unpredictable changes and configuration drift.
+{{% /notice %}}
+
