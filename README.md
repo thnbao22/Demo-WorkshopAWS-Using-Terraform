@@ -54,7 +54,7 @@ terraform plan
 
 ![ConnectPrivate](images/8.png)
 
-9. You can see some resources are being created.
+9. You can see some resources will be created.
 
 ![ConnectPrivate](images/9.png)
 
@@ -66,4 +66,35 @@ terraform apply -auto-approve
 
 ![ConnectPrivate](images/10.png)
 
+11. After you run the command, you will see some resources are being created.
 
+![ConnectPrivate](images/11.png)
+
+12. VPC:
+
+![ConnectPrivate](images/12.png)
+
+13. Subnets
+
+![ConnectPrivate](images/13.png)
+
+14. Route Tables
+
+![ConnectPrivate](images/14.png)
+
+- Subnet associations of Route Table Private
+  
+![ConnectPrivate](images/15.png)
+
+- Routes
+
+![ConnectPrivate](images/16.png)
+
+
+- Subnet associations of Route Table Public
+  
+![ConnectPrivate](images/18.png)
+
+- Routes
+
+![ConnectPrivate](images/17.png)
