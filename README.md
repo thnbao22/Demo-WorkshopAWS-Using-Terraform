@@ -98,3 +98,44 @@ terraform apply -auto-approve
 - Routes
 
 ![ConnectPrivate](images/17.png)
+
+15. Security Groups
+
+![ConnectPrivate](images/19.png)
+
+- Inbound rules
+
+![ConnectPrivate](images/20.png)
+
+16. Internet Gateway
+
+![ConnectPrivate](images/22.png)
+
+17. NAT gateway
+
+![ConnectPrivate](images/23.png)
+
+18. S3 Gateway Endpoint
+
+![ConnectPrivate](images/24.png)
+
+19. S3 Bucket
+
+![ConnectPrivate](images/26.png)
+
+20. EC2 Server
+
+![ConnectPrivate](images/26.png)
+
+27. Then you can follow the workshop to perform some actions between EC2 and S3. Know how EC2 can privately connect to S3.
+
+28. After finishing the workshop, you can automatically delete the resource by using the following command.
+```
+terraform destroy -auto-approve
+```
+
+![ConnectPrivate](images/27.png)
+
+29. After running the command, you can see that the resources have been completely deleted.
+
+![ConnectPrivate](images/28.png)
