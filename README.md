@@ -67,6 +67,6 @@ terraform apply -auto-approve
 ![ConnectPrivate](images/10.png)
 
 {{% notice warning %}}
- If you use **-auto-approve**, we recommend making sure that no one can change your infrastructure outside of your Terraform workflow. This minimizes the risk of unpredictable changes and configuration drift.
+If you use **-auto-approve**, we recommend making sure that no one can change your infrastructure outside of your Terraform workflow. This minimizes the risk of unpredictable changes and configuration drift.
 {{% /notice %}}
 
