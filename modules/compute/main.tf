@@ -27,33 +27,57 @@ resource "aws_instance" "private_server" {
   security_groups = [ var.private_server_sg ]
   # Optional: IAM Instance Profile to launch the instance with. 
   # Specified as the name of the Instance Profile.
-  iam_instance_profile = aws_iam_instance_profile.modify_role.name
+  iam_instance_profile = aws_iam_instance_profile.EC2-profile.name
   tags = {
     "Name" = "EC2 Private"
   }
 }
-# Create IAM Role for EC2 instance to have full access to S3
-resource "aws_iam_role" "full_access_s3" {
-  name = "EC2FullAccessS3"
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
-  # We use the policy name: AmazonS3FullAccess to grant permission for EC2 instance to have full access to S3
-  assume_role_policy = jsondecode({
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:*",
-                "s3-object-lambda:*"
-            ],
-            "Resource": "*"
-        }
+
+# Create an IAM role
+resource "aws_iam_policy" "S3-Full-Access" {
+  name = "S3-Full-Access-Policy"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:*",
+          "s3-object-lambda:*"
+        ]
+        Resource = "*"
+      }
     ]
   })
 }
-# Provides an IAM instance profile.
-resource "aws_iam_instance_profile" "modify_role" {
-  # Optional: Name of the role to add to the profile
-  role = aws_iam_role.full_access_s3.name
+
+# Create an IAM role
+resource "aws_iam_role" "full-access-s3" {
+  name = "EC2-full-Access-S3"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = "RoleForEC2"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      },
+    ]
+  })
+}
+
+# Attach the Policy to the created IAM role
+resource "aws_iam_policy_attachment" "attach-policy" {
+  name        = "test-attach"
+  roles       = [ aws_iam_role.full-access-s3.name]
+  policy_arn  = aws_iam_policy.S3-Full-Access.arn    
+}
+
+# Create an IAM instance profile  
+resource "aws_iam_instance_profile" "EC2-profile" {
+  name = "demo_profile"
+  role = aws_iam_role.full-access-s3.name
 }
